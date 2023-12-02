@@ -44,7 +44,5 @@ for env in ENV_NAMES:
         # TODO: TOBE REMOVED IN PRODUCTION
         errs.append(str(e).strip("'"))
 
-print(ENVS)
-
 if errs:
     raise EnvironmentError(f'Envs not found: {", ".join(errs)}')
