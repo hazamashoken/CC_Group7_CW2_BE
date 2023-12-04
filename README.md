@@ -20,11 +20,6 @@ git clone https://github.com/hazamashoken/CC_Group7_CW2.git
 
 1. Go to the `app` folder
 
-
-```sh
-python manage.py migrate
-```
-
 ```sh
 python manage.py runserver
 ```
@@ -35,3 +30,7 @@ python manage.py runserver
 ### Usage this project is done by:
 - thanapol
 - Kee Hui
+
+## Acknowledgements
+
+- [Django Project](https://www.djangoproject.com/)
