@@ -13,6 +13,7 @@ hypercorn = "^0.15.0"
 pillow = "^10.1.0"
 psycopg2-binary = "^2.9.5"
 django-ninja = "^1.0.1"
+pytz = "^2023.3.post1"
 
 
 [build-system]
