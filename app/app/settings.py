@@ -26,7 +26,7 @@ SECRET_KEY = "django-insecure-+k=h3q!4%(8^d3n7q2is(qy#$yl62n_d96o(ymra=w8kc_8%ev
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ENVS["ALLOWED_HOSTS"]
 
 
 # Application definition
@@ -130,4 +130,4 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
-CSRF_TRUSTED_ORIGINS = ["https://*", "http://*"]
+CSRF_TRUSTED_ORIGINS = ENVS["ALLOWED_HOSTS"]
