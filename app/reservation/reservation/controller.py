@@ -16,6 +16,16 @@ def get_reservation(request, day: int = 0):
 
     return 200, reservations
 
+@router.get("/me/", response={200: list[ReservationSchemaOut]})
+def get_reservation_by_user(request, day: int = 0):
+    user = request.auth.user
+    start_time = datetime.now() + timedelta(days=day)
+    # filter to get Reservation where start_time is with in today or today + day
+    reservations = Reservation.objects.filter(start_time__date=start_time.date(), user=user)
+
+    return 200, reservations
+
+
 @router.post("/", response={201: ReservationSchemaOut})
 def post_reservation(request, payload: ReservationSchemaIn):
     user = request.auth.user
