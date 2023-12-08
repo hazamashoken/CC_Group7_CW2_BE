@@ -16,6 +16,7 @@ ENV_NAMES = [
     'DJ_DB_PORT',
     
     'ALLOWED_HOSTS',
+    'CSRF_TRUSTED_ORIGINS',
 ]
 
 ENVS: dict[str, Any] = {}
@@ -36,6 +37,9 @@ def convert_env(env: str, value: str) -> Any:
         case 'DEBUG':
             return value.lower() == 'true'
         case 'ALLOWED_HOSTS':
+            res = value.split(',')
+            return [host.strip() for host in res if host != '']
+        case 'CSRF_TRUSTED_ORIGINS':
             res = value.split(',')
             return [host.strip() for host in res if host != '']
         case _:
