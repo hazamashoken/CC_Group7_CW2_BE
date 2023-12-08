@@ -1,3 +1,4 @@
+from ninja.errors import HttpError
 from ninja import Router
 from django.contrib.auth.models import User
 
@@ -18,6 +19,10 @@ def register(request, payload: UserSchemaIn):
     :param last_name: The last name of the user.\n
     :return: The user that is created.\n
     """
+    
+    if User.objects.filter(username=payload.username).exists():
+        raise HttpError(409, "Username already exists")
+    
     user = User.objects.create_user(
         **payload.dict()
     )
