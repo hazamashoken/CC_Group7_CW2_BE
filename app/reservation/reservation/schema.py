@@ -3,6 +3,7 @@ from django.shortcuts import get_object_or_404
 import pytz
 from ninja import Field, ModelSchema
 from pydantic import model_validator, root_validator, validator
+from ninja.errors import HttpError
 
 from reservation.reservables.models import Reservable
 from reservation.reservables.schema import ReservableSchemaOut
@@ -42,16 +43,16 @@ class ReservationSchemaIn(ModelSchema):
         now = datetime.now(tz=utc)
         
         if start_time > end_time:
-            raise ValueError("Start time must be before end time")
+            raise HttpError(422, "Start time must be before end time")
         if start_time > now + timedelta(days=2):
-            raise ValueError("Cannot make reservation more than 2 days in advance")
+            raise HttpError(422, "Cannot make reservation more than 2 days in advance")
         if start_time < now:
-            raise ValueError("Start time must be in the future")
+            raise HttpError(422, "Start time must be in the future")
         if end_time < now:
-            raise ValueError("End time must be in the future")
+            raise HttpError(422, "End time must be in the future")
         if (end_time - start_time).total_seconds() > 3600:
-            raise ValueError("Reservation can't be longer than 1 hour")
+            raise HttpError(422, "Reservation can't be longer than 1 hour")
         if (end_time - start_time).total_seconds() < 1300:
-            raise ValueError("Reservation can't be less than 30 min")
+            raise HttpError(422, "Reservation can't be less than 30 min")
 
         return self
