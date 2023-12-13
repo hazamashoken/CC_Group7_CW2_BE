@@ -5,15 +5,21 @@ from ninja import Field, ModelSchema
 from pydantic import model_validator, root_validator, validator
 
 from reservation.reservables.models import Reservable
+from reservation.reservables.schema import ReservableSchemaOut
 from .models import Reservation
 
 
 utc = pytz.UTC
 
 class ReservationSchemaOut(ModelSchema):
+    reservable: ReservableSchemaOut = Field(..., description="Reservable")
     class Config:
         model = Reservation
         model_fields = "__all__"
+    
+    @staticmethod
+    def resolve_reservable(obj):
+        return obj.reservable
         
 class ReservationSchemaIn(ModelSchema):
     start_time: datetime
